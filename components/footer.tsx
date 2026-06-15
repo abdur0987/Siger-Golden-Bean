@@ -8,7 +8,7 @@ export function Footer() {
   const { content } = useLanguageContent();
 
   return (
-    <footer className="bg-coffee-950 py-12 text-cream-100">
+    <footer data-nav-theme="dark" className="bg-coffee-950 py-12 text-cream-100">
       <div className="section-shell grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
           <Image

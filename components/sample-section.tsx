@@ -13,7 +13,7 @@ export function SampleSection() {
   const sample = content.sample;
 
   return (
-    <section id="sample" className="bg-origin-900 py-20 text-white md:py-24">
+    <section id="sample" data-nav-theme="dark" className="bg-origin-900 py-20 text-white md:py-24">
       <div className="section-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <SectionHeading

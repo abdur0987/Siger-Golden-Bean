@@ -4,17 +4,43 @@ import { Languages } from "lucide-react";
 import { languageOptions } from "@/data/site-content";
 import { useLanguageContent } from "@/components/language-provider";
 
-export function LanguageSwitcher({ className = "" }: { className?: string }) {
+type LanguageSwitcherProps = {
+  className?: string;
+  tone?: "light" | "dark";
+};
+
+export function LanguageSwitcher({
+  className = "",
+  tone = "light"
+}: LanguageSwitcherProps) {
   const { language, setLanguage } = useLanguageContent();
+  const isDark = tone === "dark";
+  const containerStyle = {
+    backgroundColor: isDark ? "rgba(255, 255, 255, 0.1)" : "#FFFFFF",
+    borderColor: isDark ? "rgba(252, 250, 244, 0.26)" : "rgba(58, 31, 22, 0.12)"
+  };
 
   return (
     <div
-      className={`flex items-center gap-1 rounded-md border border-coffee-900/12 bg-white p-1 ${className}`}
+      className={`flex items-center gap-1 rounded-md border p-1 transition-colors ${className}`}
+      style={containerStyle}
       aria-label="Language selector"
     >
-      <Languages className="hidden h-4 w-4 text-gold-500 sm:block" aria-hidden="true" />
+      <Languages
+        className={`hidden h-4 w-4 sm:block ${isDark ? "text-gold-300" : "text-gold-500"}`}
+        aria-hidden="true"
+      />
       {languageOptions.map((option) => {
         const active = option.code === language;
+        const buttonStyle = active
+          ? {
+              backgroundColor: isDark ? "#FCFAF4" : "#3A1F16",
+              color: isDark ? "#3A1F16" : "#FFFFFF"
+            }
+          : {
+              backgroundColor: "transparent",
+              color: isDark ? "#FCFAF4" : "rgba(58, 31, 22, 0.72)"
+            };
 
         return (
           <button
@@ -22,11 +48,8 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
             type="button"
             onClick={() => setLanguage(option.code)}
             data-language-option={option.code}
-            className={`focus-ring min-h-8 rounded px-2.5 text-xs font-black transition ${
-              active
-                ? "bg-coffee-900 text-white"
-                : "text-coffee-900/72 hover:bg-cream-100 hover:text-coffee-900"
-            }`}
+            className="focus-ring min-h-8 rounded px-2.5 text-xs font-black transition hover:brightness-110"
+            style={buttonStyle}
             aria-label={option.label}
             aria-pressed={active}
           >

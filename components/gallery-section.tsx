@@ -9,7 +9,7 @@ export function GallerySection() {
   const gallery = content.gallery;
 
   return (
-    <section id="gallery" className="bg-coffee-950 py-20 text-white md:py-24">
+    <section id="gallery" data-nav-theme="dark" className="bg-coffee-950 py-20 text-white md:py-24">
       <div className="section-shell">
         <SectionHeading
           eyebrow={gallery.eyebrow}

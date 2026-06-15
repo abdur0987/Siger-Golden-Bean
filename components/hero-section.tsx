@@ -13,6 +13,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
+      data-nav-theme="dark"
       className="relative isolate overflow-hidden bg-coffee-950 text-white"
       aria-labelledby="hero-title"
     >
