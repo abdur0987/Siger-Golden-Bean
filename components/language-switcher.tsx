@@ -24,6 +24,7 @@ export function LanguageSwitcher({
     <div
       className={`flex items-center gap-1 rounded-md border p-1 transition-colors ${className}`}
       style={containerStyle}
+      data-language-switcher={tone}
       aria-label="Language selector"
     >
       <Languages

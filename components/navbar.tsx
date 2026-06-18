@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CtaLink } from "@/components/cta-link";
@@ -11,9 +12,12 @@ type NavTheme = "light" | "dark";
 
 export function Navbar() {
   const { content } = useLanguageContent();
+  const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const [navTheme, setNavTheme] = useState<NavTheme>("light");
   const isDark = navTheme === "dark";
+  const resolveHref = (href: string) =>
+    href.startsWith("#") && pathname !== "/" ? `/${href}` : href;
 
   useEffect(() => {
     const detectTheme = () => {
@@ -67,7 +71,7 @@ export function Navbar() {
       }`}
     >
       <nav className="section-shell flex min-h-20 items-center justify-between gap-3">
-        <a href="#home" className="focus-ring flex shrink-0 items-center gap-3 rounded-md">
+        <a href={resolveHref("#home")} className="focus-ring flex shrink-0 items-center gap-3 rounded-md">
           <Image
             src="/images/logo/siger-golden-bean-logo-crop.webp"
             alt="Siger Golden Bean logo"
@@ -82,8 +86,9 @@ export function Navbar() {
           {content.nav.items.map(([label, href]) => (
             <a
               key={href}
-              href={href}
+              href={resolveHref(href)}
               data-nav-link="true"
+              style={{ color: isDark ? "#FCFAF4" : "#3A1F16" }}
               className={`focus-ring rounded-md text-sm font-semibold transition hover:text-gold-500 ${
                 isDark ? "text-cream-50" : "text-coffee-900"
               }`}
@@ -95,7 +100,7 @@ export function Navbar() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <LanguageSwitcher tone={isDark ? "dark" : "light"} />
-          <CtaLink href="#sample">{content.nav.requestSample}</CtaLink>
+          <CtaLink href={resolveHref("#sample")}>{content.nav.requestSample}</CtaLink>
         </div>
 
         <details className="group relative lg:hidden">
@@ -115,14 +120,15 @@ export function Navbar() {
               {content.nav.items.map(([label, href]) => (
                 <a
                   key={href}
-                  href={href}
+                  href={resolveHref(href)}
+                  style={{ color: "#3A1F16" }}
                   className="focus-ring rounded-md px-3 py-2 text-sm font-semibold text-coffee-900 hover:bg-cream-200/70"
                 >
                   {label}
                 </a>
               ))}
               <a
-                href="#sample"
+                href={resolveHref("#sample")}
                 className="focus-ring mt-2 rounded-md bg-gold-500 px-3 py-3 text-center text-sm font-bold text-white"
               >
                 {content.nav.requestSample}

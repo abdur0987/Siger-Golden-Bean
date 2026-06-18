@@ -1,11 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { contact } from "@/data/contact";
 import { useLanguageContent } from "@/components/language-provider";
 
 export function Footer() {
   const { content } = useLanguageContent();
+  const pathname = usePathname();
+  const resolveHref = (href: string) =>
+    href.startsWith("#") && pathname !== "/" ? `/${href}` : href;
 
   return (
     <footer data-nav-theme="dark" className="bg-coffee-950 py-12 text-cream-100">
@@ -18,7 +22,7 @@ export function Footer() {
             height={120}
             className="h-16 w-auto rounded-md bg-cream-50 object-contain"
           />
-          <p className="mt-4 max-w-md text-sm leading-6 text-cream-100/76">
+          <p className="mt-4 max-w-md text-sm leading-6 text-cream-100/75">
             {content.footer.statement}
           </p>
           <p className="mt-4 text-sm font-bold text-gold-300">
@@ -34,8 +38,8 @@ export function Footer() {
             {content.nav.items.slice(1).map(([label, href]) => (
               <a
                 key={href}
-                href={href}
-                className="focus-ring rounded-md text-sm text-cream-100/78 transition hover:text-gold-300"
+                href={resolveHref(href)}
+                className="focus-ring rounded-md text-sm text-cream-100/80 transition hover:text-gold-300"
               >
                 {label}
               </a>
@@ -47,7 +51,7 @@ export function Footer() {
           <h2 className="text-sm font-bold uppercase tracking-wider text-gold-300">
             {content.footer.contact}
           </h2>
-          <div className="mt-4 space-y-2 text-sm leading-6 text-cream-100/78">
+          <div className="mt-4 space-y-2 text-sm leading-6 text-cream-100/80">
             <p>{contact.whatsappDisplay}</p>
             <p>{contact.email}</p>
             <p>{contact.location}</p>
